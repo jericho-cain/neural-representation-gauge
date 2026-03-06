@@ -1,19 +1,22 @@
 # Neural Representation Gauge Experiments
 
-This repository contains the empirical experiment suite supporting the manuscript in `docs/main.tex`.
+This repository contains the experiment suite for the paper draft in `docs/main.tex`.
+The goal is to reproduce empirical evidence for three claims:
 
-## Scope
-
-The code demonstrates three core claims:
-
-1. Model function is invariant under invertible gauge transforms of hidden representation space when downstream weights are adjusted by the inverse transform.
-2. Cosine similarity geometry is not gauge invariant.
+1. Model function is invariant under invertible gauge transforms when downstream weights are compensated by the inverse transform.
+2. Cosine geometry is not gauge invariant.
 3. Whitening acts as a canonical gauge fixing that removes covariance anisotropy.
 
-An additional experiment probes feature-geometry stability under orthogonal gauge transforms.
-The expanded suite now includes nearest-neighbor instability in both a pedagogical setting (Digits + MLP) and a stronger setting (CIFAR-10 + small CNN).
+A stronger corroboration is included on CIFAR-10 with a small CNN, including a controlled gauge-strength (`kappa`) sweep.
 
-## Environment
+## Reproducibility Status
+
+- Deterministic seeds are set in code where relevant (`seed=42` defaults).
+- All required scripts are runnable via `python -m ...`.
+- Tests are included under `tests/`.
+- Large local data/model files are intentionally gitignored (`experiments/data/`, `experiments/artifacts/cnn_cifar10.pt`).
+
+## Environment Setup
 
 ```bash
 python -m venv .venv
@@ -21,7 +24,28 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Run Experiments
+## Replication Paths
+
+### Path A: Fast Digits-only replication (sanity + core theory support)
+
+```bash
+. .venv/bin/activate
+python -m experiments.gauge_transform
+python -m experiments.digits_nn_instability
+python -m experiments.whitening_spectrum
+python -m experiments.feature_geometry
+```
+
+Expected key outputs:
+
+- `experiments/figures/fig_cosine_distortion.png`
+- `experiments/figures/fig_nn_instability_digits.png`
+- `experiments/figures/fig_whitening_spectrum.png`
+- `experiments/figures/fig_feature_geometry_stability.png`
+- `experiments/artifacts/metrics_digits_nn.json`
+- `experiments/artifacts/metrics_whitening.json`
+
+### Path B: Full paper replication (Digits + CIFAR-10)
 
 ```bash
 . .venv/bin/activate
@@ -35,87 +59,55 @@ python -m experiments.cifar10_gauge_sweep
 python -m experiments.summarize_metrics
 ```
 
-## Run Tests
+Expected additional outputs:
+
+- `experiments/figures/fig_cosine_distortion_cifar10.png`
+- `experiments/figures/fig_nn_instability_cifar10.png`
+- `experiments/figures/fig_cifar10_kappa_sweep.png`
+- `experiments/artifacts/metrics_cifar10_nn.json`
+- `experiments/artifacts/metrics_cifar10_kappa_sweep.json`
+- `experiments/artifacts/metrics_table.md`
+
+## Validation
+
+Run tests:
 
 ```bash
 . .venv/bin/activate
 pytest -q
 ```
 
-## Current Findings (Baseline Run)
+Expected: all tests pass.
 
-These values come from the current run in this repo and are expected to vary slightly across environments/seeds.
+## Reproducibility Acceptance Checks
 
-### Experiment 1: Gauge Transform
+Use these checks to confirm results are consistent with paper claims (small numeric drift is acceptable across environments):
 
-- Test accuracy (original MLP): `0.9711`
-- Max logit difference after gauge insertion: `1.478195e-05`
-- Prediction agreement: `1.0000`
-- Mean absolute pairwise cosine shift: `0.1328`
+1. Gauge invariance checks:
+   - `prediction_agreement` should be `1.0` (or effectively 1.0 within floating-point tolerance).
+   - `max_abs_logit_diff` should remain small (`~1e-5` to `1e-4`).
 
-Interpretation: function is preserved, cosine geometry changes.
+2. Cosine non-invariance:
+   - `mean_abs_delta_cos` should be non-zero in both Digits and CIFAR scripts.
 
-### Experiment 2: Whitening
+3. Neighbor instability:
+   - `mean_jaccard_at_k["10"]` should be meaningfully below `1.0` when `kappa > 1`.
 
-- Covariance eigenvalue range before whitening: `[0.0150, 36.5792]`
-- Covariance eigenvalue range after whitening: `[1.0000, 1.0000]`
-- Mean `|eig_after - 1|`: `0.000006`
+4. Whitening effect:
+   - `mean_abs_eig_after_minus_1` in `metrics_whitening.json` should be near zero.
 
-Interpretation: whitening removes second-order anisotropy.
+5. Kappa sweep behavior:
+   - In `metrics_cifar10_kappa_sweep.json`, increasing `kappa` should generally increase distortion metrics and reduce stability metrics.
 
-### Experiment 3: Feature Geometry Stability
+## Artifact Inventory
 
-- Min principal-angle cosine between expected and observed transformed PCA subspaces: `1.000000`
-- Mean principal-angle cosine: `1.000000`
-- Max explained-variance-ratio difference: `2.980232e-08`
+Figures are written to `experiments/figures/`.
+Metrics and checkpoints are written to `experiments/artifacts/`.
 
-Interpretation: under an orthogonal gauge transform, principal subspace structure is preserved up to basis rotation.
+## Paper Integration
 
-### Nearest-Neighbor Instability (Digits MLP)
+The manuscript references these generated assets from:
 
-Run `python -m experiments.digits_nn_instability` to produce:
+- `docs/main.tex`
 
-- `experiments/figures/fig_nn_instability_digits.png`
-- `experiments/artifacts/metrics_digits_nn.json`
-
-This reports mean Jaccard overlap vs `k` between top-`k` cosine neighbors before/after gauge transform.
-
-### CIFAR-10 Corroboration (Small CNN)
-
-Run `python -m experiments.cifar10_gauge_experiment` to produce:
-
-- `experiments/figures/fig_cosine_distortion_cifar10.png`
-- `experiments/figures/fig_nn_instability_cifar10.png`
-- `experiments/artifacts/metrics_cifar10_nn.json`
-
-This replicates the same invariance/distortion/neighbor-instability story on a modern-ish vision benchmark.
-
-### CIFAR-10 Dramatic Panel: Gauge-Strength Sweep
-
-Run `python -m experiments.cifar10_gauge_sweep` to produce:
-
-- `experiments/figures/fig_cifar10_kappa_sweep.png`
-- `experiments/artifacts/metrics_cifar10_kappa_sweep.json`
-
-This sweeps condition number `kappa` (1, 2, 5, 10, 20, 50) and reports:
-
-- `mean |Δcos|` (increasing with `kappa`)
-- `Jaccard@10` (decreasing with `kappa`)
-- top-1 neighbor flip rate (increasing with `kappa`)
-
-while prediction agreement remains 1.0 after gauge compensation.
-
-## Artifacts
-
-- `experiments/figures/fig_cosine_distortion.png`
-- `experiments/figures/fig_covariance_spectrum.png`
-- `experiments/figures/fig_whitening_spectrum.png`
-- `experiments/figures/fig_whitening_effect.png`
-- `experiments/figures/fig_feature_geometry_stability.png`
-- `experiments/artifacts/mlp_digits.pt`
-- `experiments/artifacts/metrics_table.md`
-
-## Notes
-
-- This README is a findings-first baseline and will later be refactored into strict reproducibility instructions.
-- The manuscript lives in `docs/main.tex`; no LaTeX build steps are required in this repository workflow.
+No LaTeX build step is required to run experiments.
