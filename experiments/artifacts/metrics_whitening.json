@@ -1,0 +1,6 @@
+{
+  "min_eig_before": 0.015025485306978226,
+  "max_eig_before": 36.57920455932617,
+  "mean_abs_eig_after_minus_1": 5.49759715795517e-06,
+  "figure": "/home/gravlab/repos/neural-representation-gauge/experiments/figures/fig_whitening_spectrum.png"
+}

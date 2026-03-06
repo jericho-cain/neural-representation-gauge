@@ -1,0 +1,10 @@
+# local env
+.venv/
+
+# python cache
+__pycache__/
+*.pyc
+
+# large local data/artifacts
+experiments/data/
+experiments/artifacts/cnn_cifar10.pt

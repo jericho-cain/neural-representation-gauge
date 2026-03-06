@@ -1,0 +1,15 @@
+{
+  "setting": "digits_mlp",
+  "num_points": 350,
+  "max_abs_logit_diff": 1.4781951904296875e-05,
+  "prediction_agreement": 1.0,
+  "mean_abs_delta_cos": 0.1328044980764389,
+  "mean_jaccard_at_k": {
+    "1": 0.7114285714285714,
+    "5": 0.6998526077097506,
+    "10": 0.7209388697203823,
+    "20": 0.7701900972429578,
+    "50": 0.7331638007593938
+  },
+  "figure": "/home/gravlab/repos/neural-representation-gauge/experiments/figures/fig_nn_instability_digits.png"
+}

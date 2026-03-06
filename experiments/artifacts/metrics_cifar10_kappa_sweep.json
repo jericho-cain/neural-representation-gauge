@@ -1,0 +1,56 @@
+{
+  "setting": "cifar10_smallcnn_kappa_sweep",
+  "num_points": 800,
+  "test_accuracy": 0.6822999715805054,
+  "rows": [
+    {
+      "kappa": 1.0,
+      "max_abs_logit_diff": 7.62939453125e-06,
+      "prediction_agreement": 1.0,
+      "mean_abs_delta_cos": 9.503013842504515e-08,
+      "mean_jaccard_at_10": 1.0,
+      "top1_flip_rate": 0.0
+    },
+    {
+      "kappa": 2.0,
+      "max_abs_logit_diff": 5.7220458984375e-06,
+      "prediction_agreement": 1.0,
+      "mean_abs_delta_cos": 0.02324339747428894,
+      "mean_jaccard_at_10": 0.8631118881118881,
+      "top1_flip_rate": 0.12
+    },
+    {
+      "kappa": 5.0,
+      "max_abs_logit_diff": 1.1444091796875e-05,
+      "prediction_agreement": 1.0,
+      "mean_abs_delta_cos": 0.0481555201113224,
+      "mean_jaccard_at_10": 0.7468167249417249,
+      "top1_flip_rate": 0.2375
+    },
+    {
+      "kappa": 10.0,
+      "max_abs_logit_diff": 1.0967254638671875e-05,
+      "prediction_agreement": 1.0,
+      "mean_abs_delta_cos": 0.056535374373197556,
+      "mean_jaccard_at_10": 0.7155105311355311,
+      "top1_flip_rate": 0.2675
+    },
+    {
+      "kappa": 20.0,
+      "max_abs_logit_diff": 1.5974044799804688e-05,
+      "prediction_agreement": 1.0,
+      "mean_abs_delta_cos": 0.0805412232875824,
+      "mean_jaccard_at_10": 0.628724535268653,
+      "top1_flip_rate": 0.37
+    },
+    {
+      "kappa": 50.0,
+      "max_abs_logit_diff": 4.035234451293945e-05,
+      "prediction_agreement": 1.0,
+      "mean_abs_delta_cos": 0.08378525823354721,
+      "mean_jaccard_at_10": 0.6135860524279643,
+      "top1_flip_rate": 0.33625
+    }
+  ],
+  "figure": "/home/gravlab/repos/neural-representation-gauge/experiments/figures/fig_cifar10_kappa_sweep.png"
+}

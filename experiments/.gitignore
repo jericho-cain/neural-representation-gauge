@@ -1,0 +1,3 @@
+# .gitignore
+experiments/data/
+experiments/artifacts/cnn_cifar10.pt

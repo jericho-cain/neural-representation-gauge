@@ -1,0 +1,19 @@
+{
+  "setting": "cifar10_smallcnn",
+  "num_points": 800,
+  "test_accuracy": 0.6822999715805054,
+  "max_abs_logit_diff": 1.33514404296875e-05,
+  "prediction_agreement": 1.0,
+  "mean_abs_delta_cos": 0.05011400952935219,
+  "mean_jaccard_at_k": {
+    "1": 0.76,
+    "5": 0.6936309523809524,
+    "10": 0.7228036546786547,
+    "20": 0.7615852275743581,
+    "50": 0.8090442339391657
+  },
+  "figures": [
+    "/home/gravlab/repos/neural-representation-gauge/experiments/figures/fig_cosine_distortion_cifar10.png",
+    "/home/gravlab/repos/neural-representation-gauge/experiments/figures/fig_nn_instability_cifar10.png"
+  ]
+}
