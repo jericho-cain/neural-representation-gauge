@@ -1,5 +1,7 @@
 # Neural Representation Gauge Experiments
 
+[![arXiv](https://img.shields.io/badge/arXiv-2603.06774-b31b1b.svg)](https://arxiv.org/abs/2603.06774)
+
 This repository contains the experiment suite for the paper draft in `docs/main.tex`.
 The goal is to reproduce empirical evidence for three claims:
 
@@ -22,6 +24,20 @@ A stronger corroboration is included on CIFAR-10 with a small CNN, including a c
 python -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
+```
+
+## Citation
+
+If you use this repository or paper in academic work, cite:
+
+```bibtex
+@article{cain2026gauge,
+  title={Gauge Freedom in Neural Representation Spaces},
+  author={Cain, Jericho},
+  journal={arXiv preprint arXiv:2603.06774},
+  year={2026},
+  url={https://arxiv.org/abs/2603.06774}
+}
 ```
 
 ## Replication Paths
