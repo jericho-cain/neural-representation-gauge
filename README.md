@@ -1,6 +1,7 @@
 # Neural Representation Gauge Experiments
 
 [![arXiv](https://img.shields.io/badge/arXiv-2603.06774-b31b1b.svg)](https://arxiv.org/abs/2603.06774)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18932182.svg)](https://doi.org/10.5281/zenodo.18932182)
 
 This repository contains the experiment suite for the paper draft in `docs/main.tex`.
 The goal is to reproduce empirical evidence for three claims:
