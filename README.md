@@ -120,11 +120,3 @@ Use these checks to confirm results are consistent with paper claims (small nume
 
 Figures are written to `experiments/figures/`.
 Metrics and checkpoints are written to `experiments/artifacts/`.
-
-## Paper Integration
-
-The manuscript references these generated assets from:
-
-- `docs/main.tex`
-
-No LaTeX build step is required to run experiments.

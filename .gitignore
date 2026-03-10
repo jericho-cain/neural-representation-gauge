@@ -8,3 +8,6 @@ __pycache__/
 # large local data/artifacts
 experiments/data/
 experiments/artifacts/cnn_cifar10.pt
+
+# local manuscript drafts
+docs/
